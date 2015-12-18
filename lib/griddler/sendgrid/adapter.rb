@@ -15,6 +15,7 @@ module Griddler
           to: recipients(:to),
           cc: recipients(:cc),
           attachments: attachment_files,
+          charsets: charsets
         )
       end
 
@@ -24,6 +25,14 @@ module Griddler
 
       def recipients(key)
         ( params[key] || '' ).split(',')
+      end
+
+      def charsets
+        begin
+          JSON.parse(params['charsets'])
+        rescue
+          {}
+        end
       end
 
       def attachment_files
